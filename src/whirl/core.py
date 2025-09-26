@@ -45,7 +45,7 @@ def _parse_dag(dag_path: pathlib.Path) -> list[pathlib.Path]:
         sys.exit(1)
 
     hamiltonian_path = nx.tournament.hamiltonian_path(G)
-    
+
     lookup = {x["task"]: x["file"] for x in tasks}
 
     run_order = [pathlib.Path(lookup[x]).absolute() for x in hamiltonian_path]
@@ -56,7 +56,7 @@ def _parse_dag(dag_path: pathlib.Path) -> list[pathlib.Path]:
 def run(args: dict) -> None:
     command = args.command
     file_path = pathlib.Path(args.file).absolute()
-    
+
     if not file_path.exists():
         print("Invalid file path, try again")
         sys.exit(1)
@@ -66,7 +66,7 @@ def run(args: dict) -> None:
     if command == "plan":
         print("Whirl will execute the notebooks in following order")
         print("Order is based on Hamiltonian path in directed acyclic graph\n")
-        for idx,f in enumerate(run_config):
+        for idx, f in enumerate(run_config):
             if not f.exists():
                 e_message = "ERROR: File on given path does not exist."
                 print(f"{idx+1} : {f} - {e_message}")
@@ -74,9 +74,6 @@ def run(args: dict) -> None:
                 print(f"{idx+1} : {f} - File OK")
     else:
 
-
-        
-        
         print("Running notebooks...")
         for f in run_config:
             if not f.exists():
@@ -87,21 +84,20 @@ def run(args: dict) -> None:
                 client = nc.NotebookClient(
                     nb,
                     timeout=600 if not args.timeout else args.timeout,
-                    resources={'metadata': {'path': '/tmp/'}}
+                    resources={"metadata": {"path": "/tmp/"}},
                 )
                 print("Creating ipykernel for notebook execution...")
                 client.setup_kernel()
                 print(f"Executing notebook: {f.name}")
                 try:
-                    client.execute()                    
+                    client.execute()
                 except CellExecutionError:
-                    msg = f'Error executing the notebook {f.name}.\n'
+                    msg = f"Error executing the notebook {f.name}.\n"
                     print(msg)
                     raise
 
         print("All done.")
-        
-            
+
 
 def generate(args: dict) -> None:
     print("I am generating")

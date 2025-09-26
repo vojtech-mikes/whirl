@@ -21,9 +21,12 @@ class CliParser:
             "--file", "-f", type=str, required=True, help="Path to the Whirl DAG file"
         )
         parser_run.add_argument(
-            "--timeout", type=int, required=False, help="Sets timeout for execution context. Default is 600 sec."
+            "--timeout",
+            type=int,
+            required=False,
+            help="Sets timeout for execution context. Default is 600 sec.",
         )
-        
+
         parser_run.set_defaults(func=run)
 
         parser_plan = subparsers.add_parser(
