@@ -1,9 +1,0 @@
-tasks:
-  - task: bronze
-    file: 1_bronze.ipynb
-  - task: silver
-    file: 2_silver.ipynb
-    after: bronze
-  - task: gold
-    file: 3_gold.ipynb
-    after: silver
