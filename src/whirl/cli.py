@@ -20,21 +20,22 @@ class CliParser:
         parser_run.add_argument(
             "--file", "-f", type=str, required=True, help="Path to the Whirl DAG file"
         )
+        parser_run.add_argument(
+            "--timeout", type=int, required=False, help="Sets timeout for execution context. Default is 600 sec."
+        )
+        
         parser_run.set_defaults(func=run)
 
-        parser_run = subparsers.add_parser(
+        parser_plan = subparsers.add_parser(
             "plan", help="Plan Whirl DAG (this is like dry-run)"
         )
-        parser_run.add_argument(
+        parser_plan.add_argument(
             "--file", "-f", type=str, required=True, help="Path to the Whirl DAG file"
         )
-        parser_run.set_defaults(func=run)
+        parser_plan.set_defaults(func=run)
 
-        parser_run = subparsers.add_parser(
+        parser_generate = subparsers.add_parser(
             "generate",
             help="Generate Whirl DAG if the notebooks follow numbering convetion",
         )
-        parser_run.add_argument(
-            "--file", "-f", type=str, required=True, help="Path to the Whirl DAG file"
-        )
-        parser_run.set_defaults(func=generate)
+        parser_generate.set_defaults(func=generate)
